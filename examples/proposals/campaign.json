@@ -1,0 +1,7 @@
+{
+  "seed": 42,
+  "count": 8,
+  "parent_sha256": "642f6f7babba0511b92e620963b674311ceb3d955c014eafa95bafe788d1ab8a",
+  "status": "proposed_only_not_simulated",
+  "migration": "Existing HF proposal parameters retained; LF frozen and geometry excluded."
+}

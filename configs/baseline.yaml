@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=../schema/design.schema.json
+# All dimensions in mm; exported meshes in metres. Targets are not predictions.
+schema_version: 1
+fixed:
+  superformula_m: 8
+  lf_driver: B&C 6NDL38
+  lf_count: 2
+  hf_driver: B&C DH450
+  architecture: central_hf_spine_flanking_lf_slots
+  throat_diameter_mm: 25.4
+manual:
+  hf_only: true  # Active approximation: DH450 source and main horn only.
+  coverage:
+    horizontal_target_deg: 90  # Set 100 or 110 without changing geometry code.
+    horizontal_stretch_deg: 110
+    vertical_target_deg: 10
+  hf_count: 1  # Initial assumption, not a finalized HF loading decision.
+  module_depth_mm: 330
+  hf_transformer_depth_mm: 85
+  lf_transition_depth_mm: 75
+  lf_inlet_diameter_mm: 130  # Proxy only; not a manufacturer specification.
+  lf_inlet_center_x_mm: 110
+  angular_segments: 64
+  length_segments: 12
+  frequencies_hz: [1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000, 12500, 16000]
+  sound_speed_m_s: 343
+  density_kg_m3: 1.21
+  elements_per_wavelength: 6
+  array_elements: 3
+  array_gap_mm: 4
+  array_splay_deg: [0, 0]  # Adjacent-module angles, degrees. Metadata in V0.
+  crossover_hz: 1200
+  crossover_label: LR6_acoustic_target  # Metadata, not an implemented electrical filter.
+optimized:
+  mouth_width_mm: 380
+  mouth_height_mm: 250
+  horn_length_mm: 140
+  hf_aperture_width_mm: 14
+  hf_aperture_height_mm: 238
+  lf_slot_width_mm: 32
+  lf_slot_height_mm: 190
+  lf_slot_center_x_mm: 60
+  lf_slot_z_fraction: 0.35
+  morph_rate: 3.693701077
+  sf_a: 1.375827392
+  sf_b: 1.437994835
+  sf_n1: 2.152737774
+  sf_n2: 5.245161223
+  sf_n3: 3.01531782

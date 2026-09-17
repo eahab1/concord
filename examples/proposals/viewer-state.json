@@ -1,0 +1,376 @@
+{
+  "version": 1,
+  "status": "complete",
+  "total": 8,
+  "baseline": {
+    "id": "baseline",
+    "design_sha256": "642f6f7babba0511b92e620963b674311ceb3d955c014eafa95bafe788d1ab8a",
+    "config": "baseline.yaml",
+    "bounds_m": [
+      [
+        -0.19,
+        0.18999999999999997
+      ],
+      [
+        -0.12499999999999999,
+        0.12499999999999997
+      ],
+      [
+        -0.085,
+        0.14
+      ]
+    ],
+    "hf_only": true,
+    "parameters": {
+      "mouth_width_mm": 380.0,
+      "mouth_height_mm": 250.0,
+      "horn_length_mm": 140.0,
+      "hf_aperture_width_mm": 14.0,
+      "hf_aperture_height_mm": 238.0,
+      "morph_rate": 3.693701077,
+      "sf_a": 1.375827392,
+      "sf_b": 1.437994835,
+      "sf_n1": 2.152737774,
+      "sf_n2": 5.245161223,
+      "sf_n3": 3.01531782
+    },
+    "coverage": {
+      "horizontal_target_deg": 90.0,
+      "horizontal_stretch_deg": 110,
+      "vertical_target_deg": 10.0
+    },
+    "resolution": "Inspection preview, at most 32 angular \u00d7 8 length segments",
+    "triangles": 1056,
+    "result": null
+  },
+  "candidates": [
+    {
+      "id": "candidate-0000",
+      "design_sha256": "497cfb400f99f08cdeb7cca7efe78158f10304b7849939cc752d41c3a31e5133",
+      "config": "candidate-0000.yaml",
+      "bounds_m": [
+        [
+          -0.19089882961206434,
+          0.19089882961206428
+        ],
+        [
+          -0.11940881244081394,
+          0.11940881244081383
+        ],
+        [
+          -0.085,
+          0.15892656838759087
+        ]
+      ],
+      "hf_only": true,
+      "parameters": {
+        "mouth_width_mm": 381.79765922412867,
+        "mouth_height_mm": 238.81762488162786,
+        "horn_length_mm": 158.92656838759086,
+        "hf_aperture_width_mm": 19.33202639348957,
+        "hf_aperture_height_mm": 200.32493798390306,
+        "morph_rate": 4.828852288827125,
+        "sf_a": 1.2039134541351522,
+        "sf_b": 0.9112950120561776,
+        "sf_n1": 1.386865507333856,
+        "sf_n2": 6.932460564432218,
+        "sf_n3": 5.226082219568237
+      },
+      "coverage": {
+        "horizontal_target_deg": 90.0,
+        "horizontal_stretch_deg": 110,
+        "vertical_target_deg": 10.0
+      },
+      "resolution": "Inspection preview, at most 32 angular \u00d7 8 length segments",
+      "triangles": 1056,
+      "result": null
+    },
+    {
+      "id": "candidate-0001",
+      "design_sha256": "062e2bd15730359a8df5a7e7f5b2b52409cbaa484dd61c6a623712765de93add",
+      "config": "candidate-0001.yaml",
+      "bounds_m": [
+        [
+          -0.19614256546548758,
+          0.19614256546548758
+        ],
+        [
+          -0.12959463573387633,
+          0.12959463573387633
+        ],
+        [
+          -0.085,
+          0.15362280914547005
+        ]
+      ],
+      "hf_only": true,
+      "parameters": {
+        "mouth_width_mm": 392.2851309309752,
+        "mouth_height_mm": 259.1892714677527,
+        "horn_length_mm": 153.62280914547006,
+        "hf_aperture_width_mm": 21.62362069571119,
+        "hf_aperture_height_mm": 218.92671886041768,
+        "morph_rate": 3.309408581027048,
+        "sf_a": 1.6454862034579083,
+        "sf_b": 0.8549892603867947,
+        "sf_n1": 1.9115931026061874,
+        "sf_n2": 3.0257157452147503,
+        "sf_n3": 1.5585438384653925
+      },
+      "coverage": {
+        "horizontal_target_deg": 90.0,
+        "horizontal_stretch_deg": 110,
+        "vertical_target_deg": 10.0
+      },
+      "resolution": "Inspection preview, at most 32 angular \u00d7 8 length segments",
+      "triangles": 1056,
+      "result": null
+    },
+    {
+      "id": "candidate-0002",
+      "design_sha256": "6cd4c04939922bce38fbbebd82f04713759c67eabd7d3599919f1512c689059d",
+      "config": "candidate-0002.yaml",
+      "bounds_m": [
+        [
+          -0.18465581772722062,
+          0.18465581772722062
+        ],
+        [
+          -0.11702002858819457,
+          0.11702002858819457
+        ],
+        [
+          -0.085,
+          0.12779736031100922
+        ]
+      ],
+      "hf_only": true,
+      "parameters": {
+        "mouth_width_mm": 369.3116354544412,
+        "mouth_height_mm": 234.04005717638915,
+        "horn_length_mm": 127.79736031100921,
+        "hf_aperture_width_mm": 16.899582219701603,
+        "hf_aperture_height_mm": 218.24160894850422,
+        "morph_rate": 3.592141540986374,
+        "sf_a": 1.5309572068003858,
+        "sf_b": 1.0053663778377164,
+        "sf_n1": 3.9165071918013967,
+        "sf_n2": 2.143817456333499,
+        "sf_n3": 3.6561880923035344
+      },
+      "coverage": {
+        "horizontal_target_deg": 90.0,
+        "horizontal_stretch_deg": 110,
+        "vertical_target_deg": 10.0
+      },
+      "resolution": "Inspection preview, at most 32 angular \u00d7 8 length segments",
+      "triangles": 1056,
+      "result": null
+    },
+    {
+      "id": "candidate-0003",
+      "design_sha256": "bcca8ca5453f82fceff911e4b3cb7252e0976875ae66c19e88c9d1bce5cd0c15",
+      "config": "candidate-0003.yaml",
+      "bounds_m": [
+        [
+          -0.1997904670127319,
+          0.19979046701273187
+        ],
+        [
+          -0.12779999519708185,
+          0.12779999519708185
+        ],
+        [
+          -0.085,
+          0.15569497437746463
+        ]
+      ],
+      "hf_only": true,
+      "parameters": {
+        "mouth_width_mm": 399.5809340254638,
+        "mouth_height_mm": 255.5999903941637,
+        "horn_length_mm": 155.69497437746463,
+        "hf_aperture_width_mm": 17.584599513858244,
+        "hf_aperture_height_mm": 242.1425960094905,
+        "morph_rate": 2.070963503902811,
+        "sf_a": 1.0531794123035918,
+        "sf_b": 1.9314916572020653,
+        "sf_n1": 4.505470505890676,
+        "sf_n2": 3.2027451655893455,
+        "sf_n3": 5.5880706570641605
+      },
+      "coverage": {
+        "horizontal_target_deg": 90.0,
+        "horizontal_stretch_deg": 110,
+        "vertical_target_deg": 10.0
+      },
+      "resolution": "Inspection preview, at most 32 angular \u00d7 8 length segments",
+      "triangles": 1056,
+      "result": null
+    },
+    {
+      "id": "candidate-0004",
+      "design_sha256": "2c8c1821581becee1ad2c1a1b936dec831d3c1eca09adcd150212434d51f55e5",
+      "config": "candidate-0004.yaml",
+      "bounds_m": [
+        [
+          -0.1879126380212133,
+          0.1879126380212133
+        ],
+        [
+          -0.13329095179481087,
+          0.13329095179481087
+        ],
+        [
+          -0.085,
+          0.1458851852587399
+        ]
+      ],
+      "hf_only": true,
+      "parameters": {
+        "mouth_width_mm": 375.8252760424266,
+        "mouth_height_mm": 266.58190358962173,
+        "horn_length_mm": 145.88518525873988,
+        "hf_aperture_width_mm": 11.708322330972734,
+        "hf_aperture_height_mm": 212.3313753846992,
+        "morph_rate": 2.597602020561589,
+        "sf_a": 1.0631849109887401,
+        "sf_b": 1.9970451277941323,
+        "sf_n1": 3.038105174705858,
+        "sf_n2": 1.6363658852165572,
+        "sf_n3": 1.329814627973142
+      },
+      "coverage": {
+        "horizontal_target_deg": 90.0,
+        "horizontal_stretch_deg": 110,
+        "vertical_target_deg": 10.0
+      },
+      "resolution": "Inspection preview, at most 32 angular \u00d7 8 length segments",
+      "triangles": 1056,
+      "result": null
+    },
+    {
+      "id": "candidate-0005",
+      "design_sha256": "3dd893c2f019c55f9a79c71b201c90fc766f1c978f33e60c8f0cf671b5085e1b",
+      "config": "candidate-0005.yaml",
+      "bounds_m": [
+        [
+          -0.1821929826070132,
+          0.1821929826070132
+        ],
+        [
+          -0.1275489208340618,
+          0.12754892083406177
+        ],
+        [
+          -0.085,
+          0.1792079364362964
+        ]
+      ],
+      "hf_only": true,
+      "parameters": {
+        "mouth_width_mm": 364.3859652140264,
+        "mouth_height_mm": 255.0978416681236,
+        "horn_length_mm": 179.2079364362964,
+        "hf_aperture_width_mm": 13.910239535195576,
+        "hf_aperture_height_mm": 203.17638530759785,
+        "morph_rate": 4.443118808937992,
+        "sf_a": 0.8137772263313836,
+        "sf_b": 1.6648661832322336,
+        "sf_n1": 3.726841476106299,
+        "sf_n2": 4.758792312861566,
+        "sf_n3": 2.8677763296677994
+      },
+      "coverage": {
+        "horizontal_target_deg": 90.0,
+        "horizontal_stretch_deg": 110,
+        "vertical_target_deg": 10.0
+      },
+      "resolution": "Inspection preview, at most 32 angular \u00d7 8 length segments",
+      "triangles": 1056,
+      "result": null
+    },
+    {
+      "id": "candidate-0006",
+      "design_sha256": "d762ce044658b0a99f342d42b933238bca417a544b1961519f848efc6aecdc7e",
+      "config": "candidate-0006.yaml",
+      "bounds_m": [
+        [
+          -0.19525021600150302,
+          0.19525021600150302
+        ],
+        [
+          -0.1257875806023925,
+          0.1257875806023925
+        ],
+        [
+          -0.085,
+          0.17786264786305583
+        ]
+      ],
+      "hf_only": true,
+      "parameters": {
+        "mouth_width_mm": 390.50043200300604,
+        "mouth_height_mm": 251.57516120478502,
+        "horn_length_mm": 177.86264786305583,
+        "hf_aperture_width_mm": 15.424951410732485,
+        "hf_aperture_height_mm": 200.02859480639717,
+        "morph_rate": 4.326662117444718,
+        "sf_a": 1.1690169504831938,
+        "sf_b": 0.8695101997930251,
+        "sf_n1": 4.512038396816163,
+        "sf_n2": 7.6286461170859585,
+        "sf_n3": 1.5995741644751513
+      },
+      "coverage": {
+        "horizontal_target_deg": 90.0,
+        "horizontal_stretch_deg": 110,
+        "vertical_target_deg": 10.0
+      },
+      "resolution": "Inspection preview, at most 32 angular \u00d7 8 length segments",
+      "triangles": 1056,
+      "result": null
+    },
+    {
+      "id": "candidate-0007",
+      "design_sha256": "ef08dc85ef2bc63708886c1b950abc41c8ad4f21fc523a4a6e1125b0f2711cce",
+      "config": "candidate-0007.yaml",
+      "bounds_m": [
+        [
+          -0.18971980926633228,
+          0.18971980926633228
+        ],
+        [
+          -0.11638425036936768,
+          0.11638425036936768
+        ],
+        [
+          -0.085,
+          0.17606021652572315
+        ]
+      ],
+      "hf_only": true,
+      "parameters": {
+        "mouth_width_mm": 379.43961853266455,
+        "mouth_height_mm": 232.76850073873536,
+        "horn_length_mm": 176.06021652572315,
+        "hf_aperture_width_mm": 18.721682010297826,
+        "hf_aperture_height_mm": 206.41957322498814,
+        "morph_rate": 2.6925517608035476,
+        "sf_a": 1.0541578465304986,
+        "sf_b": 1.44715530653535,
+        "sf_n1": 3.9197242763599047,
+        "sf_n2": 2.4080574437278712,
+        "sf_n3": 3.1820140391062646
+      },
+      "coverage": {
+        "horizontal_target_deg": 90.0,
+        "horizontal_stretch_deg": 110,
+        "vertical_target_deg": 10.0
+      },
+      "resolution": "Inspection preview, at most 32 angular \u00d7 8 length segments",
+      "triangles": 1056,
+      "result": null
+    }
+  ]
+}

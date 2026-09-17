@@ -1,0 +1,424 @@
+{
+  "$defs": {
+    "Coverage": {
+      "additionalProperties": false,
+      "properties": {
+        "horizontal_target_deg": {
+          "default": 90,
+          "maximum": 110,
+          "minimum": 90,
+          "title": "Horizontal Target Deg",
+          "type": "number"
+        },
+        "horizontal_stretch_deg": {
+          "const": 110,
+          "default": 110,
+          "title": "Horizontal Stretch Deg",
+          "type": "integer"
+        },
+        "vertical_target_deg": {
+          "default": 10,
+          "exclusiveMinimum": 0,
+          "maximum": 30,
+          "title": "Vertical Target Deg",
+          "type": "number"
+        }
+      },
+      "title": "Coverage",
+      "type": "object"
+    },
+    "Fixed": {
+      "additionalProperties": false,
+      "properties": {
+        "superformula_m": {
+          "const": 8,
+          "default": 8,
+          "title": "Superformula M",
+          "type": "integer"
+        },
+        "lf_driver": {
+          "const": "B&C 6NDL38",
+          "default": "B&C 6NDL38",
+          "title": "Lf Driver",
+          "type": "string"
+        },
+        "lf_count": {
+          "const": 2,
+          "default": 2,
+          "title": "Lf Count",
+          "type": "integer"
+        },
+        "hf_driver": {
+          "const": "B&C DH450",
+          "default": "B&C DH450",
+          "title": "Hf Driver",
+          "type": "string"
+        },
+        "architecture": {
+          "const": "central_hf_spine_flanking_lf_slots",
+          "default": "central_hf_spine_flanking_lf_slots",
+          "title": "Architecture",
+          "type": "string"
+        },
+        "throat_diameter_mm": {
+          "const": 25.4,
+          "default": 25.4,
+          "title": "Throat Diameter Mm",
+          "type": "number"
+        }
+      },
+      "title": "Fixed",
+      "type": "object"
+    },
+    "Manual": {
+      "additionalProperties": false,
+      "properties": {
+        "hf_only": {
+          "default": true,
+          "title": "Hf Only",
+          "type": "boolean"
+        },
+        "coverage": {
+          "$ref": "#/$defs/Coverage",
+          "default": {
+            "horizontal_target_deg": 90.0,
+            "horizontal_stretch_deg": 110,
+            "vertical_target_deg": 10.0
+          }
+        },
+        "hf_count": {
+          "const": 1,
+          "default": 1,
+          "title": "Hf Count",
+          "type": "integer"
+        },
+        "module_depth_mm": {
+          "default": 330,
+          "exclusiveMinimum": 0,
+          "title": "Module Depth Mm",
+          "type": "number"
+        },
+        "hf_transformer_depth_mm": {
+          "default": 85,
+          "exclusiveMinimum": 0,
+          "title": "Hf Transformer Depth Mm",
+          "type": "number"
+        },
+        "lf_transition_depth_mm": {
+          "default": 75,
+          "exclusiveMinimum": 0,
+          "title": "Lf Transition Depth Mm",
+          "type": "number"
+        },
+        "lf_inlet_diameter_mm": {
+          "default": 130,
+          "exclusiveMinimum": 0,
+          "title": "Lf Inlet Diameter Mm",
+          "type": "number"
+        },
+        "lf_inlet_center_x_mm": {
+          "default": 110,
+          "exclusiveMinimum": 0,
+          "title": "Lf Inlet Center X Mm",
+          "type": "number"
+        },
+        "angular_segments": {
+          "default": 64,
+          "maximum": 256,
+          "minimum": 16,
+          "multipleOf": 4,
+          "title": "Angular Segments",
+          "type": "integer"
+        },
+        "length_segments": {
+          "default": 12,
+          "maximum": 128,
+          "minimum": 4,
+          "title": "Length Segments",
+          "type": "integer"
+        },
+        "frequencies_hz": {
+          "default": [
+            1000,
+            1250,
+            1600,
+            2000,
+            2500,
+            3150,
+            4000,
+            5000,
+            6300,
+            8000,
+            10000,
+            12500,
+            16000
+          ],
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "title": "Frequencies Hz",
+          "type": "array"
+        },
+        "sound_speed_m_s": {
+          "default": 343,
+          "exclusiveMinimum": 0,
+          "title": "Sound Speed M S",
+          "type": "number"
+        },
+        "density_kg_m3": {
+          "default": 1.21,
+          "exclusiveMinimum": 0,
+          "title": "Density Kg M3",
+          "type": "number"
+        },
+        "elements_per_wavelength": {
+          "default": 6,
+          "maximum": 20,
+          "minimum": 6,
+          "title": "Elements Per Wavelength",
+          "type": "integer"
+        },
+        "array_elements": {
+          "default": 3,
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Array Elements",
+          "type": "integer"
+        },
+        "array_gap_mm": {
+          "default": 4,
+          "minimum": 0,
+          "title": "Array Gap Mm",
+          "type": "number"
+        },
+        "array_splay_deg": {
+          "default": [
+            0,
+            0
+          ],
+          "items": {
+            "maximum": 10,
+            "minimum": 0,
+            "type": "number"
+          },
+          "title": "Array Splay Deg",
+          "type": "array"
+        },
+        "crossover_hz": {
+          "default": 1200,
+          "exclusiveMinimum": 0,
+          "title": "Crossover Hz",
+          "type": "number"
+        },
+        "crossover_label": {
+          "const": "LR6_acoustic_target",
+          "default": "LR6_acoustic_target",
+          "title": "Crossover Label",
+          "type": "string"
+        }
+      },
+      "title": "Manual",
+      "type": "object"
+    },
+    "Optimized": {
+      "additionalProperties": false,
+      "properties": {
+        "mouth_width_mm": {
+          "default": 380,
+          "maximum": 400,
+          "minimum": 360,
+          "title": "Mouth Width Mm",
+          "type": "number"
+        },
+        "mouth_height_mm": {
+          "default": 250,
+          "maximum": 270,
+          "minimum": 230,
+          "title": "Mouth Height Mm",
+          "type": "number"
+        },
+        "horn_length_mm": {
+          "default": 140,
+          "maximum": 200,
+          "minimum": 100,
+          "title": "Horn Length Mm",
+          "type": "number"
+        },
+        "hf_aperture_width_mm": {
+          "default": 14,
+          "maximum": 22,
+          "minimum": 8,
+          "title": "Hf Aperture Width Mm",
+          "type": "number"
+        },
+        "hf_aperture_height_mm": {
+          "default": 238,
+          "maximum": 250,
+          "minimum": 200,
+          "title": "Hf Aperture Height Mm",
+          "type": "number"
+        },
+        "lf_slot_width_mm": {
+          "default": 32,
+          "maximum": 45,
+          "minimum": 20,
+          "title": "Lf Slot Width Mm",
+          "type": "number"
+        },
+        "lf_slot_height_mm": {
+          "default": 190,
+          "maximum": 220,
+          "minimum": 150,
+          "title": "Lf Slot Height Mm",
+          "type": "number"
+        },
+        "lf_slot_center_x_mm": {
+          "default": 60,
+          "maximum": 90,
+          "minimum": 35,
+          "title": "Lf Slot Center X Mm",
+          "type": "number"
+        },
+        "lf_slot_z_fraction": {
+          "default": 0.35,
+          "maximum": 0.6,
+          "minimum": 0.2,
+          "title": "Lf Slot Z Fraction",
+          "type": "number"
+        },
+        "morph_rate": {
+          "default": 3.693701077,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Morph Rate",
+          "type": "number"
+        },
+        "sf_a": {
+          "default": 1.375827392,
+          "maximum": 2,
+          "minimum": 0.8,
+          "title": "Sf A",
+          "type": "number"
+        },
+        "sf_b": {
+          "default": 1.437994835,
+          "maximum": 2,
+          "minimum": 0.8,
+          "title": "Sf B",
+          "type": "number"
+        },
+        "sf_n1": {
+          "default": 2.152737774,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Sf N1",
+          "type": "number"
+        },
+        "sf_n2": {
+          "default": 5.245161223,
+          "maximum": 8,
+          "minimum": 1,
+          "title": "Sf N2",
+          "type": "number"
+        },
+        "sf_n3": {
+          "default": 3.01531782,
+          "maximum": 8,
+          "minimum": 1,
+          "title": "Sf N3",
+          "type": "number"
+        }
+      },
+      "title": "Optimized",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "fixed": {
+      "$ref": "#/$defs/Fixed",
+      "default": {
+        "superformula_m": 8,
+        "lf_driver": "B&C 6NDL38",
+        "lf_count": 2,
+        "hf_driver": "B&C DH450",
+        "architecture": "central_hf_spine_flanking_lf_slots",
+        "throat_diameter_mm": 25.4
+      }
+    },
+    "manual": {
+      "$ref": "#/$defs/Manual",
+      "default": {
+        "hf_only": true,
+        "coverage": {
+          "horizontal_stretch_deg": 110,
+          "horizontal_target_deg": 90.0,
+          "vertical_target_deg": 10.0
+        },
+        "hf_count": 1,
+        "module_depth_mm": 330.0,
+        "hf_transformer_depth_mm": 85.0,
+        "lf_transition_depth_mm": 75.0,
+        "lf_inlet_diameter_mm": 130.0,
+        "lf_inlet_center_x_mm": 110.0,
+        "angular_segments": 64,
+        "length_segments": 12,
+        "frequencies_hz": [
+          1000.0,
+          1250.0,
+          1600.0,
+          2000.0,
+          2500.0,
+          3150.0,
+          4000.0,
+          5000.0,
+          6300.0,
+          8000.0,
+          10000.0,
+          12500.0,
+          16000.0
+        ],
+        "sound_speed_m_s": 343.0,
+        "density_kg_m3": 1.21,
+        "elements_per_wavelength": 6,
+        "array_elements": 3,
+        "array_gap_mm": 4.0,
+        "array_splay_deg": [
+          0.0,
+          0.0
+        ],
+        "crossover_hz": 1200.0,
+        "crossover_label": "LR6_acoustic_target"
+      }
+    },
+    "optimized": {
+      "$ref": "#/$defs/Optimized",
+      "default": {
+        "mouth_width_mm": 380.0,
+        "mouth_height_mm": 250.0,
+        "horn_length_mm": 140.0,
+        "hf_aperture_width_mm": 14.0,
+        "hf_aperture_height_mm": 238.0,
+        "lf_slot_width_mm": 32.0,
+        "lf_slot_height_mm": 190.0,
+        "lf_slot_center_x_mm": 60.0,
+        "lf_slot_z_fraction": 0.35,
+        "morph_rate": 3.693701077,
+        "sf_a": 1.375827392,
+        "sf_b": 1.437994835,
+        "sf_n1": 2.152737774,
+        "sf_n2": 5.245161223,
+        "sf_n3": 3.01531782
+      }
+    }
+  },
+  "title": "Design",
+  "type": "object"
+}

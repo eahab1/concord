@@ -1,0 +1,71 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "design_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Design Sha256",
+      "type": "string"
+    },
+    "solver": {
+      "minLength": 1,
+      "title": "Solver",
+      "type": "string"
+    },
+    "synthetic": {
+      "default": false,
+      "title": "Synthetic",
+      "type": "boolean"
+    },
+    "frequencies_hz": {
+      "items": {
+        "exclusiveMinimum": 0,
+        "type": "number"
+      },
+      "title": "Frequencies Hz",
+      "type": "array"
+    },
+    "angles_deg": {
+      "items": {
+        "type": "number"
+      },
+      "title": "Angles Deg",
+      "type": "array"
+    },
+    "horizontal_db": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "type": "array"
+      },
+      "title": "Horizontal Db",
+      "type": "array"
+    },
+    "vertical_db": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "type": "array"
+      },
+      "title": "Vertical Db",
+      "type": "array"
+    }
+  },
+  "required": [
+    "design_sha256",
+    "solver",
+    "frequencies_hz",
+    "angles_deg",
+    "horizontal_db",
+    "vertical_db"
+  ],
+  "title": "Response",
+  "type": "object"
+}

@@ -1,0 +1,24 @@
+{
+  "vertices": 1601,
+  "triangles": 3136,
+  "tag_counts": {
+    "1": 3072,
+    "2": 64
+  },
+  "boundary_edges": 64,
+  "nonmanifold_edges": 0,
+  "inconsistent_winding_edges": 0,
+  "degenerate_triangles": 0,
+  "min_angle_deg": 3.3531041521614555,
+  "max_edge_m": 0.06782256073630967,
+  "target_max_edge_m": 0.0035729166666666665,
+  "wavelength_resolution_pass": false,
+  "bem_ready": false,
+  "self_intersections_checked": false,
+  "blockers": [
+    "No closed exterior cabinet/baffle/wall thickness; open-mouth winding requires solver-specific review.",
+    "HF transformer is a simple loft, not a path-equalized line-source manifold.",
+    "Preview horn uses a superformula loft, not canonical ATH OS-SE/termination equations."
+  ],
+  "hf_only": true
+}

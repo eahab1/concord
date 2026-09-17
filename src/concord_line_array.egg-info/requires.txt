@@ -1,0 +1,8 @@
+PyYAML<7,>=6
+pydantic<3,>=2.8
+
+[dev]
+pytest<10,>=8
+
+[mesh]
+gmsh<5,>=4.13

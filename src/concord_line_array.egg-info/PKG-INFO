@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: concord-line-array
+Version: 0.1.0
+Summary: Editable Concord line-array geometry and acoustic workflow scaffold
+Requires-Python: >=3.11
+Requires-Dist: PyYAML<7,>=6
+Requires-Dist: pydantic<3,>=2.8
+Provides-Extra: mesh
+Requires-Dist: gmsh<5,>=4.13; extra == "mesh"
+Provides-Extra: dev
+Requires-Dist: pytest<10,>=8; extra == "dev"

@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "status": "complete",
+  "total": 0,
+  "baseline": {
+    "id": "baseline",
+    "design_sha256": "642f6f7babba0511b92e620963b674311ceb3d955c014eafa95bafe788d1ab8a",
+    "config": "resolved.yaml",
+    "bounds_m": [
+      [
+        -0.19,
+        0.18999999999999995
+      ],
+      [
+        -0.12499999999999999,
+        0.12499999999999999
+      ],
+      [
+        -0.085,
+        0.14
+      ]
+    ],
+    "hf_only": true,
+    "parameters": {
+      "mouth_width_mm": 380.0,
+      "mouth_height_mm": 250.0,
+      "horn_length_mm": 140.0,
+      "hf_aperture_width_mm": 14.0,
+      "hf_aperture_height_mm": 238.0,
+      "morph_rate": 3.693701077,
+      "sf_a": 1.375827392,
+      "sf_b": 1.437994835,
+      "sf_n1": 2.152737774,
+      "sf_n2": 5.245161223,
+      "sf_n3": 3.01531782
+    },
+    "coverage": {
+      "horizontal_target_deg": 90.0,
+      "horizontal_stretch_deg": 110,
+      "vertical_target_deg": 10.0
+    },
+    "resolution": "Full exported concept mesh",
+    "triangles": 3136,
+    "result": null
+  },
+  "candidates": []
+}

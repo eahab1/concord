@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "concord-line-array"
+version = "0.1.0"
+description = "Editable Concord line-array geometry and acoustic workflow scaffold"
+requires-python = ">=3.11"
+dependencies = ["PyYAML>=6,<7", "pydantic>=2.8,<3"]
+
+[project.optional-dependencies]
+mesh = ["gmsh>=4.13,<5"]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+concord = "concord.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+concord = ["data/*.ath", "data/*.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

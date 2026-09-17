@@ -1,0 +1,56 @@
+schema_version: 1
+fixed:
+  superformula_m: 8
+  lf_driver: B&C 6NDL38
+  lf_count: 2
+  hf_driver: B&C DH450
+  architecture: central_hf_spine_flanking_lf_slots
+  throat_diameter_mm: 25.4
+manual:
+  hf_only: true
+  coverage:
+    horizontal_target_deg: 90.0
+    horizontal_stretch_deg: 110
+    vertical_target_deg: 10.0
+  hf_count: 1
+  module_depth_mm: 330.0
+  hf_transformer_depth_mm: 85.0
+  lf_transition_depth_mm: 75.0
+  lf_inlet_diameter_mm: 130.0
+  lf_inlet_center_x_mm: 110.0
+  angular_segments: 64
+  length_segments: 12
+  frequencies_hz:
+  - 500.0
+  - 1000.0
+  - 2000.0
+  - 5000.0
+  - 10000.0
+  - 15000.0
+  - 20000.0
+  sound_speed_m_s: 343.0
+  density_kg_m3: 1.21
+  elements_per_wavelength: 6
+  array_elements: 3
+  array_gap_mm: 4.0
+  array_splay_deg:
+  - 0.0
+  - 0.0
+  crossover_hz: 1200.0
+  crossover_label: LR6_acoustic_target
+optimized:
+  mouth_width_mm: 380.0
+  mouth_height_mm: 250.0
+  horn_length_mm: 140.0
+  hf_aperture_width_mm: 14.0
+  hf_aperture_height_mm: 238.0
+  lf_slot_width_mm: 32.0
+  lf_slot_height_mm: 190.0
+  lf_slot_center_x_mm: 60.0
+  lf_slot_z_fraction: 0.35
+  morph_rate: 3.693701077
+  sf_a: 1.375827392
+  sf_b: 1.437994835
+  sf_n1: 2.152737774
+  sf_n2: 5.245161223
+  sf_n3: 3.01531782

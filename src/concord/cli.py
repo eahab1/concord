@@ -77,16 +77,84 @@ def main(argv=None):
     p.add_argument("--out",type=Path,required=True)
     p=sub.add_parser("solve")
     p.add_argument("job",type=Path)
-    p.add_argument("--backend",choices=["hornlab-metal","boundary-lab"],required=True)
+    p.add_argument("--backend",choices=["hornlab-metal","hornlab-metal-f32","bempp-cpu","boundary-lab"],required=True)
     p=sub.add_parser("view")
     p.add_argument("output",type=Path)
     p=sub.add_parser("attach-result")
     p.add_argument("output",type=Path)
     p.add_argument("--candidate",required=True)
     p.add_argument("--response",type=Path,required=True)
+    p=sub.add_parser("prepare-bem")
+    p.add_argument("config",type=Path)
+    p.add_argument("--out",type=Path,required=True)
+    p.add_argument("--edge-mm",type=float,default=16.)
+    p.add_argument("--max-edge-mm",type=float,help="Locally split edges above this cap")
+    p=sub.add_parser("analyze")
+    p.add_argument("config",type=Path)
+    p.add_argument("--out",type=Path,required=True)
+    p.add_argument("--backend",choices=["bempp-cpu","hornlab-metal","hornlab-metal-f32"],default="bempp-cpu")
+    p.add_argument("--max-frequency",type=float,default=2000.,help="Upper frequency in Hz (default: 2000)")
+    p.add_argument("--min-frequency",type=float,help="Lower frequency in Hz")
+    p.add_argument("--frequency-points",type=int,help="Sample count including both endpoints (2–1000)")
+    p.add_argument("--frequency-spacing",choices=["log","linear"],default="log")
+    p.add_argument("--edges-mm",type=float,nargs="+",default=[24.,16.,10.])
+    p.add_argument("--max-edge-mm",type=float,help="Optional local edge cap for each analysis mesh")
+    p=sub.add_parser("campaign",help="Analyze generations, rank results, and propose offspring")
+    p.add_argument("config",type=Path)
+    p.add_argument("--out",type=Path,required=True)
+    p.add_argument("--generations",type=int,default=2)
+    p.add_argument("--population",type=int,default=4)
+    p.add_argument("--seed",type=int,default=42)
+    p.add_argument("--backend",choices=["bempp-cpu","hornlab-metal","hornlab-metal-f32"],default="bempp-cpu")
+    p.add_argument("--max-frequency",type=float,default=2000.,help="Upper frequency in Hz (default: 2000)")
+    p.add_argument("--min-frequency",type=float,help="Lower frequency in Hz")
+    p.add_argument("--frequency-points",type=int,help="Sample count including both endpoints (2–1000)")
+    p.add_argument("--frequency-spacing",choices=["log","linear"],default="log")
+    p.add_argument("--edges-mm",type=float,nargs="+",default=[24.,16.,10.])
+    p.add_argument("--max-edge-mm",type=float,help="Optional local edge cap for each analysis mesh")
+    p.add_argument("--resume",action="store_true")
+    p.add_argument("--propose-only",action="store_true")
+    p.add_argument("--mode",choices=["validated","fast"],default="validated",help="Fast: screen all candidates, validate only finalists")
+    p.add_argument("--finalists",type=int,default=1,help="Number of finalists to validate in fast mode")
+    p.add_argument("--cache-dir",type=Path,help="Shared result cache for fast campaigns")
+    p=sub.add_parser("preflight",help="Check high-frequency meshes and matrix sizes without solving")
+    p.add_argument("config",type=Path)
+    p.add_argument("--out",type=Path,required=True)
+    p.add_argument("--max-frequency",type=float,default=20000.)
+    p.add_argument("--edges-mm",type=float,nargs="+",default=[2.,1.5,1.25])
     args=parser.parse_args(argv)
     try:
-        if args.command=="view":
+        if args.command=="preflight":
+            from .preflight import preflight
+            result=preflight(args.config,args.out,args.max_frequency,args.edges_mm)
+            if not result['levels'][-1]['mesh']['wavelength_resolution_pass']: return 2
+        elif args.command=="campaign":
+            if args.mode=="fast":
+                from .fast_campaign import run
+                extra=dict(finalists=args.finalists,cache_dir=args.cache_dir)
+            else:
+                from .campaign import run
+                if args.cache_dir is not None or args.finalists!=1:
+                    raise ValueError("--cache-dir and --finalists require --mode fast")
+                extra={}
+            result=run(args.config,args.out,args.generations,args.population,args.seed,args.backend,
+                       args.max_frequency,args.edges_mm,args.resume,args.propose_only,
+                       min_frequency=args.min_frequency,frequency_points=args.frequency_points,
+                       frequency_spacing=args.frequency_spacing,max_edge_mm=args.max_edge_mm,**extra)
+            report=args.out/("summary.txt" if args.mode=="fast" else "viewer.html")
+            print(f"{result['status']}: {report}")
+            if result['status'].startswith('blocked'): return 2
+        elif args.command=="analyze":
+            from .analysis import analyze
+            qualification=analyze(args.config,args.out,args.backend,args.max_frequency,args.edges_mm,
+                                  args.min_frequency,args.frequency_points,args.frequency_spacing,args.max_edge_mm)
+            if not qualification["mesh_converged"]:
+                return 2
+        elif args.command=="prepare-bem":
+            from .analysis import prepare
+            prepare(load(args.config),args.out,args.edge_mm,args.max_edge_mm)
+            print(f"Prepared BEM job: {args.out/'bem-job.json'}")
+        elif args.command=="view":
             viewer=args.output/"viewer.html"
             if not viewer.is_file():
                 raise ValueError("No viewer in this output; regenerate with build or propose")
@@ -108,9 +176,11 @@ def main(argv=None):
             args.out.parent.mkdir(parents=True,exist_ok=True)
             refine_gmsh(args.mesh,args.out)
         elif args.command=="solve":
-            job=json.loads(args.job.read_text())
-            backend=HornLabMetalBackend() if args.backend=="hornlab-metal" else BoundaryLabBackend()
-            backend.solve(job)
+            if args.backend=="boundary-lab":
+                BoundaryLabBackend().solve({})
+            else:
+                from .analysis import solve_job
+                solve_job(args.job,args.job.parent/"solution",args.backend)
         else:
             design=load(args.config)
             if args.command=="validate":
@@ -141,7 +211,7 @@ def main(argv=None):
                     raise ValueError("Response design hash does not match configuration")
                 print(json.dumps(score(design,response),indent=2))
         return 0
-    except (ValueError,OSError,RuntimeError,NotImplementedError) as exc:
+    except (ValueError,OSError,RuntimeError,NotImplementedError,ImportError) as exc:
         print(f"concord: {exc}",file=sys.stderr)
         return 2
 

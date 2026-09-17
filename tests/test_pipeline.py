@@ -143,7 +143,7 @@ def test_response_shape_and_hash(tmp_path):
     assert main(["score",str(ROOT/"configs/baseline.yaml"),str(path)])==2
 
 
-@pytest.mark.parametrize("backend",[HornLabMetalBackend,BoundaryLabBackend])
+@pytest.mark.parametrize("backend",[BoundaryLabBackend])
 def test_unimplemented_solver_cannot_fake_results(backend):
     with pytest.raises(NotImplementedError):
         backend().solve({})

@@ -17,7 +17,7 @@ def campaign(tmp_path):
 
 def fixture_response(design):
     angles = list(range(-90, 91, 5))
-    return {"design_sha256": digest(design), "solver": "TEST FIXTURE ONLY",
+    return {"design_sha256": digest(design), "solver": "TEST FIXTURE ONLY", "analysis_status": "mesh_converged",
             "frequencies_hz": design.manual.frequencies_hz, "angles_deg": angles,
             "horizontal_db": [[-6 * (a / 45)**2 for a in angles] for _ in design.manual.frequencies_hz],
             "vertical_db": [[-6 * (a / 5)**2 for a in angles] for _ in design.manual.frequencies_hz]}

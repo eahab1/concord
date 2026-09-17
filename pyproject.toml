@@ -12,6 +12,8 @@ dependencies = ["PyYAML>=6,<7", "pydantic>=2.8,<3"]
 [project.optional-dependencies]
 mesh = ["gmsh>=4.13,<5"]
 dev = ["pytest>=8,<10"]
+bem = ["gmsh>=4.13,<5", "numpy>=2,<3", "scipy>=1.14,<2", "meshio>=5.3,<6", "bempp-cl==0.4.2"]
+metal = ["gmsh>=4.13,<5", "hornlab-metal-bem @ git+https://github.com/m3gnus/hornlab-metal-bem.git@2c2c712c7bafc2de7ab08a571d9f4211cf9624b5"]
 
 [project.scripts]
 concord = "concord.cli:main"

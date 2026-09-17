@@ -1,5 +1,9 @@
 # Verification record
 
+## HF BEM integration
+
+34 Python tests passed after adding boundary-contract, source-area, hash validation, response normalization and unrankable-result coverage. A real CPU reference solve and three-level baseline ladder completed separately; see [analysis results](analysis.md). The native Metal helper compiled, but its runtime smoke check reported no accessible Metal device. No Metal solve is claimed. The viewer unit harness also passed using the real four-frequency analysis output; dependency consistency and the uv lock check passed.
+
 ## HF-only approximation
 
 30 Python tests and the JavaScript viewer smoke test passed. The baseline now contains 3,136 triangles, only wall/HF tags, and one connected surface. Tests verify frozen LF candidate values, HF-only source mapping, and explicit opt-in to the earlier full concept. The baseline and eight proposal viewers were regenerated. No acoustic solve was run; the earlier scaffold counts below are historical.

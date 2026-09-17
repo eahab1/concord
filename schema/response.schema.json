@@ -22,6 +22,24 @@
       "title": "Synthetic",
       "type": "boolean"
     },
+    "analysis_status": {
+      "default": "unqualified",
+      "enum": [
+        "unqualified",
+        "reference_validated",
+        "mesh_converged"
+      ],
+      "title": "Analysis Status",
+      "type": "string"
+    },
+    "analysis_notes": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Analysis Notes",
+      "type": "array"
+    },
     "frequencies_hz": {
       "items": {
         "exclusiveMinimum": 0,

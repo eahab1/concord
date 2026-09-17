@@ -1,6 +1,7 @@
-"""Explicit adapter boundary. No fabricated Boundary Lab or HornLab solver calls."""
+"""Validated BEM response schema and explicit external solver entrypoints."""
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Protocol
 
 from .config import Design, Model, Positive
@@ -14,6 +15,8 @@ class Response(Model):
     design_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
     solver: str = Field(min_length=1)
     synthetic: bool = False
+    analysis_status: Literal["unqualified", "reference_validated", "mesh_converged"] = "unqualified"
+    analysis_notes: list[str] = []
     frequencies_hz: list[Positive]
     angles_deg: list[float]
     horizontal_db: list[list[float]]
@@ -35,14 +38,18 @@ class Response(Model):
 
 
 class BEMBackend(Protocol):
-    def solve(self, job: dict) -> Response:
+    def solve(self, job: str | Path) -> Response:
         """Return on-axis normalized horizontal and vertical pressure levels."""
         ...
 
 
 class HornLabMetalBackend:
     def solve(self,job):
-        raise NotImplementedError("HornLab Metal adapter is intentionally unconnected. See docs/integration.md; qualify topology, units, source normals, source velocities and observation frame first.")
+        from .analysis import solve_job
+        if not isinstance(job,(str,Path)):
+            raise ValueError("Pass a prepared bem-job.json path")
+        path=Path(job)
+        return solve_job(path,path.parent/"solution","hornlab-metal")[1]
 
 
 class BoundaryLabBackend:

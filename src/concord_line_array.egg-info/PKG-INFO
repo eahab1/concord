@@ -9,3 +9,12 @@ Provides-Extra: mesh
 Requires-Dist: gmsh<5,>=4.13; extra == "mesh"
 Provides-Extra: dev
 Requires-Dist: pytest<10,>=8; extra == "dev"
+Provides-Extra: bem
+Requires-Dist: gmsh<5,>=4.13; extra == "bem"
+Requires-Dist: numpy<3,>=2; extra == "bem"
+Requires-Dist: scipy<2,>=1.14; extra == "bem"
+Requires-Dist: meshio<6,>=5.3; extra == "bem"
+Requires-Dist: bempp-cl==0.4.2; extra == "bem"
+Provides-Extra: metal
+Requires-Dist: gmsh<5,>=4.13; extra == "metal"
+Requires-Dist: hornlab-metal-bem @ git+https://github.com/m3gnus/hornlab-metal-bem.git@2c2c712c7bafc2de7ab08a571d9f4211cf9624b5 ; extra == "metal"

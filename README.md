@@ -2,7 +2,7 @@
 
 An independently editable Python repository for the initial Concord line-array design. Run it locally on macOS; no ChatGPT, cloud account, or Windows runtime is required for the scaffold.
 
-**Status: working configuration, concept geometry, mesh export, candidate generation and scoring scaffold. Not an acoustically validated horn, manufacturing CAD, or connected BEM solver.**
+**Status: HF-only CPU BEM baseline analyzed and mesh-checked at 1, 1.25, 1.6 and 2 kHz. Geometry, viewer and analysis commands work locally. This is an ideal-source infinite-baffle approximation, not a validated full-band loudspeaker or manufacturing model.**
 
 The architecture is two B&C 6NDL38 LF drivers per vertical module, flanking morphing LF passages, and a B&C DH450 feeding a central vertical HF spine. V0 assumes one DH450 per module. The coverage objectives are 90° horizontal (editable through 110°) and about 10° vertical. They are optimization targets, not predictions from mouth size. Superformula **m = 8** is locked in validation and geometry and excluded from the optimizer. With unequal superformula a/b and exponents, m=8 alone does not guarantee eightfold rotational symmetry.
 
@@ -12,7 +12,17 @@ The architecture is two B&C 6NDL38 LF drivers per vertical module, flanking morp
 
 The two 6NDL38 driver requirements and LF dimensions remain saved for later integration. Inlet packaging checks still reserve their space. Set `manual.hf_only: false` only to inspect the earlier disconnected three-source concept; it is not a completed LF junction design. Existing configs without this field now default to HF-only, so their resolved hashes change and old result files must not be reused.
 
-The baseline and eight example proposals have been refreshed. Reload an already-open viewer to load the new interface. The example candidates retain their previous HF values, with LF variables reset to the baseline. Removing LF lofts does not make the open horn/manifold BEM-ready or imply achieved coverage.
+The baseline and eight example proposals have been refreshed. Reload an already-open viewer to load the new interface. The example candidates retain their previous HF values, with LF variables reset to the baseline. The inspection mesh remains a preview. `analyze` constructs a separate coupled-baffle boundary; this does not imply achieved coverage.
+
+## Run acoustic analysis
+
+```sh
+uv sync --extra bem --extra dev
+uv run --extra bem concord analyze configs/hf-analysis.yaml --out runs/my-hf-analysis
+uv run concord view runs/my-hf-analysis
+```
+
+The completed local result is `runs/hf-analysis-02/viewer.html`. See [analysis instructions and results](docs/analysis.md) for the boundary model, qualification limits, candidate workflow and optional Metal backend. The final refinement changed significant polar response by 0.287 dB at the sampled 1–2 kHz frequencies. Coverage targets have **not** been met; the 2 kHz result is approximately 150° horizontal × 36° vertical.
 
 ## Install on macOS
 
@@ -68,13 +78,13 @@ The candidate list refreshes every three seconds while preview files are being w
 
 Proposal previews use the same geometry generator at up to 32 angular × 8 length segments to keep larger searches manageable. `build` previews use the full exported mesh. Inspect the resolution label above the geometry; preview meshes are not BEM meshes. The baseline overlay has a shared coordinate frame and scale. Inputs and acoustic targets remain unchanged by the viewer.
 
-Scores stay empty until validated external results are attached. After proposal generation finishes:
+Scores stay empty until mesh-converged results with both -6 dB crossings are attached; unrankable real results still display their polar curves. After proposal generation finishes:
 
 ```sh
 concord attach-result runs/search-01 --candidate candidate-0000 --response path/to/response.json
 ```
 
-The command verifies the candidate hash, frequency grid, result shape and score eligibility, then saves a copy under `results/`. The viewer updates objective and best-so-far charts, plus horizontal/vertical off-axis response curves with a frequency selector. `--candidate baseline` also works, including in single-build folders. Result provenance is supplied by the external backend; schema validation is not independent proof of simulation accuracy. Declared synthetic results are rejected. The viewer does not run the unfinished BEM solver.
+The command verifies the candidate hash, frequency grid, result shape and score eligibility, then saves a copy under `results/`. The viewer updates objective and best-so-far charts, plus horizontal/vertical off-axis response curves with a frequency selector. `--candidate baseline` also works, including in single-build folders. Result provenance is supplied by the external backend; schema validation is not independent proof of simulation accuracy. Declared synthetic results are rejected. Run `analyze` to generate qualified numerical results; the viewer itself is read-only.
 
 Implementation: `src/concord/viewer.py` publishes the output; `src/concord/data/viewer.html` is the editable HTML/CSS/JavaScript interface. It uses Canvas 2D to project and depth-sort triangles, with no external 3D library. Intersecting concept surfaces can show approximate occlusion; use Gmsh for detailed mesh inspection.
 
@@ -115,7 +125,7 @@ concord score runs/candidates/candidate-0000.yaml path/to/response.json
 
 The result must carry the candidate configuration hash printed by `validate` or stored in its manifest, the exact requested frequencies, and horizontal/vertical dB arrays normalized to boresight. Scoring uses interpolated first -6 dB crossings on each side of boresight, coverage error, horizontal beamwidth variation and off-axis peak penalty. Missing crossings, malformed arrays, stale hashes and declared synthetic data are rejected. Lower scores are better. This initial objective still needs explicit sidelobe, frequency-response ripple, LF/HF crossover matching, loading and robustness terms before engineering selection.
 
-`concord solve runs/v0/bem-job.json --backend hornlab-metal` (or `boundary-lab`) exits with a clear unimplemented-adapter error. See [integration notes](docs/integration.md) for the exact extension boundary. No synthetic acoustics are substituted.
+`build` jobs remain blocked inspection jobs. Use `prepare-bem` followed by `solve --backend bempp-cpu` for a single mesh, or `analyze` for reference validation and mesh convergence. See [analysis instructions](docs/analysis.md). Boundary Lab remains unconnected; Metal is implemented but could not access a GPU in the agent runtime.
 
 ## Repository map and next implementation steps
 
@@ -128,3 +138,13 @@ The result must carry the candidate configuration hash printed by `validate` or 
 
 The local source is the complete editable workbench. No proprietary generator or conversation state is required. Git can track your changes (`git status`, `git diff`); keep run folders outside version control or archive the resolved configurations and manifests alongside measured results.
 # concord
+
+Generation-by-generation runs, frequency sweeps, ranking, directivity maps and parameter history are documented in [docs/generations.md](docs/generations.md). Start with `concord campaign ... --propose-only` to inspect proposals, then resume to analyze them.
+
+For the 32 GB M4 mesh feasibility checks and actual higher-frequency validation results, see [docs/fullband-validation.md](docs/fullband-validation.md).
+
+The experimental single-precision Metal backend and local edge refinement are documented in [docs/lower-memory-metal.md](docs/lower-memory-metal.md).
+
+The seven-frequency 500 Hz–20 kHz baseline check passed on the 32 GB M4. See [the measured results](docs/fullband-baseline-results.md) for convergence metrics, resource use and scope.
+
+For faster generation searches, see [fast-search.md](docs/fast-search.md): `campaign --mode fast` screens every candidate, validates only finalists, and caches unchanged results. Screening ranks remain provisional; the default campaign mode still validates every candidate.

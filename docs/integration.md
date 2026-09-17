@@ -1,4 +1,6 @@
-# BEM and canonical geometry integration boundary
+# BEM integration history
+
+**This document records the original scaffold boundary. The current CPU implementation, prepared-mesh contract and validated baseline are documented in [analysis.md](analysis.md). Historical unimplemented-adapter statements below do not describe the current CPU path.**
 
 ## Verified upstream contracts
 

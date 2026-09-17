@@ -1,8 +1,19 @@
 PyYAML<7,>=6
 pydantic<3,>=2.8
 
+[bem]
+gmsh<5,>=4.13
+numpy<3,>=2
+scipy<2,>=1.14
+meshio<6,>=5.3
+bempp-cl==0.4.2
+
 [dev]
 pytest<10,>=8
 
 [mesh]
 gmsh<5,>=4.13
+
+[metal]
+gmsh<5,>=4.13
+hornlab-metal-bem @ git+https://github.com/m3gnus/hornlab-metal-bem.git@2c2c712c7bafc2de7ab08a571d9f4211cf9624b5

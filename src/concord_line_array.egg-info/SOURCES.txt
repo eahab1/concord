@@ -1,13 +1,19 @@
 README.md
 pyproject.toml
 src/concord/__init__.py
+src/concord/acoustic_mesh.py
+src/concord/analysis.py
 src/concord/bem.py
+src/concord/campaign.py
 src/concord/cli.py
 src/concord/config.py
+src/concord/cpu_bem.py
+src/concord/frequency.py
 src/concord/geometry.py
 src/concord/mesh.py
 src/concord/optimization.py
 src/concord/viewer.py
+src/concord/data/campaign.html
 src/concord/data/concord_v2.ath
 src/concord/data/viewer.html
 src/concord_line_array.egg-info/PKG-INFO
@@ -16,5 +22,7 @@ src/concord_line_array.egg-info/dependency_links.txt
 src/concord_line_array.egg-info/entry_points.txt
 src/concord_line_array.egg-info/requires.txt
 src/concord_line_array.egg-info/top_level.txt
+tests/test_analysis.py
+tests/test_campaign.py
 tests/test_pipeline.py
 tests/test_viewer.py

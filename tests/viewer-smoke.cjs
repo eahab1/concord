@@ -18,6 +18,17 @@ let scope;
 const document={getElementById:id=>{assert(elements.has(id),id);return elements.get(id)},createElement:tag=>new Element(tag),querySelector:()=>new Element(),querySelectorAll:()=>views,head:{append(el){const source=el.src.split('?')[0];vm.runInContext(fs.readFileSync(path.join(folder,source),'utf8'),scope);el.onload()}}};
 scope=vm.createContext({document,window:{devicePixelRatio:1},ResizeObserver:class{observe(){}},setInterval(){},console});
 vm.runInContext(html.split('<script>')[1].split('</script>')[0],scope);
+const initial=JSON.parse(fs.readFileSync(path.join(folder,'viewer-state.json'),'utf8'));
+if(initial.candidates.length===0 && initial.baseline.result){
+ assert.equal(elements.get('selection').textContent,'Baseline');
+ assert.equal(elements.get('polars').hidden,false);
+ assert.equal(elements.get('frequency').children.length,initial.baseline.result.response.frequencies_hz.length);
+ assert.equal(elements.get('objective').textContent,initial.baseline.result.score.objective===null?'Not ranked':Number(initial.baseline.result.score.objective).toLocaleString(undefined,{maximumFractionDigits:2}));
+ elements.get('frequency').value=String(Math.min(1,initial.baseline.result.response.frequencies_hz.length-1));elements.get('frequency').onchange();
+ assert(paintCalls>1000);
+ console.log('Real analysis viewer passed: geometry, frequency selection, finite polar drawing, unrankable result status.');
+ process.exit(0);
+}
 assert.equal(elements.get('selection').textContent,'Baseline');
 assert.equal(elements.get('objective').textContent,'Not simulated');
 assert.equal(elements.get('acoustic-empty').hidden,false);
@@ -45,3 +56,9 @@ assert.equal(elements.get('acoustic-empty').hidden,true);
 assert.equal(elements.get('objective').textContent,'0.2');
 assert.equal(elements.get('frequency').children.length,1);
 console.log('Viewer smoke passed: drawing, selection, overlay, views, zoom, refresh, result charts.');
+
+data.candidates[0].result.score={objective:null,reason:'No -6 dB crossings'};
+scope.window.concordUpdate(data);
+assert.equal(elements.get('objective').textContent,'Not ranked');
+assert.equal(elements.get('polars').hidden,false);
+assert(elements.get('analysis-note').textContent.includes('No -6 dB crossings'));

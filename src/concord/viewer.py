@@ -14,7 +14,7 @@ from .optimization import score
 
 
 def design_hash(design):
-    return hashlib.sha256(json.dumps(design.model_dump(), sort_keys=True,
+    return hashlib.sha256(json.dumps(Design.model_validate(design.model_dump()).model_dump(), sort_keys=True,
                                     separators=(",", ":"), allow_nan=False).encode()).hexdigest()
 
 
@@ -85,7 +85,20 @@ def attach_result(out: Path, identifier: str, response_path: Path):
     response = Response.model_validate_json(response_path.read_text())
     if response.design_sha256 != design_hash(design) or response.design_sha256 != selected["design_sha256"]:
         raise ValueError("Response/configuration hash does not match the selected candidate")
-    scored = score(design, response)  # Also rejects synthetic and incompatible data.
+    if response.synthetic:
+        raise ValueError("Synthetic data cannot rank design candidates")
+    if response.frequencies_hz != design.manual.frequencies_hz:
+        raise ValueError("Response frequencies do not match design request")
+    if response.analysis_status != "mesh_converged":
+        scored = {"objective": None, "reason": "Mesh convergence has not passed; plots only."}
+    else:
+        try:
+            scored = score(design, response)
+        except ValueError as exc:
+            if "crossings" not in str(exc):
+                raise
+            scored = {"objective": None, "reason": str(exc)}
+    (out / "viewer.html").write_text(files("concord").joinpath("data/viewer.html").read_text())
     selected["result"] = {"score": scored, "response": response.model_dump()}
     results = out / "results"
     results.mkdir(exist_ok=True)

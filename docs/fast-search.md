@@ -44,3 +44,24 @@ Cached outputs are copied into each campaign so campaigns remain inspectable ind
 Automated tests cover unchanged-elite reuse, independent score qualifications, resume, interruption, numerical setting mismatches, corrupted cache recovery, failed reference checks, synthetic response rejection and validation failure blocking. A real Metal test at 1 and 2 kHz completed screening in 1.24 s and reused its cached output in 0.006 s; the reference cache also hit. These tiny-mesh timings verify integration and must not be extrapolated to 20 kHz. A real two-candidate Metal campaign at 1 and 2 kHz also completed: both candidates were screened, the leader passed the three-mesh convergence check, and the next generation was proposed. Resuming that completed campaign reused its checkpoints without invoking the solver. All 61 Python tests pass.
 
 Frequency-dependent meshes, changes to the Metal factorization kernel, and adaptive frequency sampling are not implemented here. The full-band screening mesh still resolves 20 kHz. The model remains an ideal HF source in an infinite baffle. This runner is sequential, but has no automatic RSS guard; candidate mesh sizes may differ from the baseline's measured 18.92 GiB peak during validation.
+
+## Live terminal status
+
+Metal solves print an elapsed-time update every ten seconds while a frequency (or float64 batch) is running, followed by its completion time and the completed frequency count. This heartbeat confirms that the Python runner is still waiting for the solver; it cannot distinguish a slow native solve from a stalled native solve. The installed coupled solver does not expose a within-frequency completion percentage, so no percentage or ETA is invented. Status is terminal-only for now.
+
+Already-running Python processes keep the old code. Let the current run finish; newly started runs use the indicator automatically. As with other source updates, the fast campaign solver fingerprint changes, so older campaign checkpoints require their original code for resume; new-code campaigns should use a new output directory.
+
+## Improve generations first; validate later
+
+Set `--finalists 0` in fast mode to advance generations using provisional single-mesh scores without running the fine-mesh ladder. The solver reference and wavelength-resolution checks remain enabled. An unchanged elite is cached across generations. A generation with no eligible screening results still blocks. Every screening score remains provisional; this mode never claims mesh convergence.
+
+The next search uses `configs/hf-generation-search.yaml`, saved from candidate 0001 of `search-fast-01` (screening objective 7.73732). It retains seven samples from 500 Hz to 20 kHz and superformula m=8. The original four candidate results remain in `search-fast-01`; its incomplete validation has been stopped. A new campaign rechecks the starting design under the current code before exploring offspring. Fine-mesh validation can later be run with `concord analyze` on a selected candidate's `resolved.yaml`.
+
+```sh
+uv run --extra bem --extra metal concord campaign configs/hf-generation-search.yaml \
+  --out runs/search-generations-screen-01 --mode fast --generations 2 --population 4 \
+  --backend hornlab-metal-f32 --max-frequency 20000 \
+  --edges-mm 2.5 2 1.85 --max-edge-mm 2.8 --finalists 0
+```
+
+Only the first edge size (2.5 mm) is used in this mode. Smaller values in the supplied ladder are reserved for validation and are not solved. This removes validation overhead, not the cost of individual screening solves. Launching this run does not require changing the results browser; it will discover the new folder automatically.

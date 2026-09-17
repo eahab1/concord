@@ -148,3 +148,5 @@ The experimental single-precision Metal backend and local edge refinement are do
 The seven-frequency 500 Hz–20 kHz baseline check passed on the 32 GB M4. See [the measured results](docs/fullband-baseline-results.md) for convergence metrics, resource use and scope.
 
 For faster generation searches, see [fast-search.md](docs/fast-search.md): `campaign --mode fast` screens every candidate, validates only finalists, and caches unchanged results. Screening ranks remain provisional; the default campaign mode still validates every candidate.
+
+Browse all saved runs without interrupting the solver: `python3 scripts/results_browser.py --follow-latest --open`. The [live results library](docs/results-browser.md) refreshes every five seconds and can automatically display each newly completed solve.

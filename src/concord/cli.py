@@ -115,7 +115,7 @@ def main(argv=None):
     p.add_argument("--resume",action="store_true")
     p.add_argument("--propose-only",action="store_true")
     p.add_argument("--mode",choices=["validated","fast"],default="validated",help="Fast: screen all candidates, validate only finalists")
-    p.add_argument("--finalists",type=int,default=1,help="Number of finalists to validate in fast mode")
+    p.add_argument("--finalists",type=int,default=1,help="Finalists to validate in fast mode; 0 advances generations using provisional screening only")
     p.add_argument("--cache-dir",type=Path,help="Shared result cache for fast campaigns")
     p=sub.add_parser("preflight",help="Check high-frequency meshes and matrix sizes without solving")
     p.add_argument("config",type=Path)

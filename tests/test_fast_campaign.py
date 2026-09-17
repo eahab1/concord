@@ -103,3 +103,18 @@ def test_changed_checkpoint_rejected(tmp_path):
     p=out/s['generations'][0]['candidates'][0]['config']
     d=load(p);save(d.model_copy(update={'optimized':d.optimized.model_copy(update={'mouth_width_mm':390})}),p)
     with pytest.raises(ValueError,match='edited'):run(cfg,out,resume=True,**kw)
+
+
+def test_screening_only_generations_never_validate(tmp_path):
+    cfg,calls,kw=setup(tmp_path)
+    s=run(cfg,tmp_path/'search',finalists=0,**kw)
+    assert calls=={'screen':3,'validate':0}
+    assert s['status']=='complete; next generation proposed'
+    assert len(s['generations'])==3
+    for g in s['generations'][:2]:
+        assert all('validation' not in c for c in g['candidates'])
+        assert all(c['screening']['score']['qualification']=='provisional' for c in g['candidates'])
+    run(cfg,tmp_path/'search',resume=True,finalists=0,**kw)
+    assert calls=={'screen':3,'validate':0}
+    with pytest.raises(ValueError,match='match'):
+        run(cfg,tmp_path/'search',resume=True,finalists=1,**kw)

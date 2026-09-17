@@ -62,10 +62,17 @@ def metal_solve(path,frequencies,*,speed=343.,density=1.21,angle_step=2.,distanc
                                                        planes=["horizontal","vertical"],origin="mouth"))
     # The low-memory backend never batches multiple frequency factorizations.
     batches=[[f] for f in frequencies] if precision=="float32" else [frequencies]
+    from .progress import heartbeat
     results=[]
+    completed=0
     for batch in batches:
         print(f"Metal {precision}: {', '.join(f'{f:g}' for f in batch)} Hz · {path}",flush=True)
-        results.append(solve_frequencies(str(path),batch,config))
+        label=f"{', '.join(f'{f:g}' for f in batch)} Hz ({completed}/{len(frequencies)} frequencies finished)"
+        with heartbeat(label):
+            result=solve_frequencies(str(path),batch,config)
+        results.append(result)
+        completed+=len(batch)
+        print(f"  Frequency sweep: {completed}/{len(frequencies)} complete",flush=True)
     return {"pressure":np.concatenate([r.pressure_complex for r in results]),
             "loading":np.concatenate([np.atleast_1d(r.impedance) for r in results]),
             "angles":results[0].observation_angles_deg,

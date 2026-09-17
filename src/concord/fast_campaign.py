@@ -61,8 +61,8 @@ def run(config, out, generations=2, population=4, seed=42, backend='bempp-cpu',
         finalists=1, cache_dir=None, screener=None, analyzer=None):
     if not 1 <= generations <= 100 or not 2 <= population <= 100:
         raise ValueError('Use 1–100 generations and 2–100 candidates per generation')
-    if not 1 <= finalists <= population:
-        raise ValueError('Finalists must be between 1 and population')
+    if not 0 <= finalists <= population:
+        raise ValueError('Finalists must be between 0 and population; 0 defers validation')
     if len(edges)<3 or any(not math.isfinite(e) or not .5<=e<=40 for e in edges) or any(a<=b for a,b in zip(edges,edges[1:])):
         raise ValueError('Use at least three decreasing mesh edges between 0.5 and 40 mm')
     if max_edge_mm is not None and not .5<=max_edge_mm<=40:
@@ -165,7 +165,9 @@ def run(config, out, generations=2, population=4, seed=42, backend='bempp-cpu',
                     for rank,c in enumerate(validated,1): c['validation_rank']=rank
                     # Explicit fast mode breeds from provisional ranks, but rejects known validation failures.
                     eligible=[c for c in ranked if c.get('validation',{}).get('status') not in ('failed','unqualified')]
-                    if not validated:
+                    if not eligible:
+                        state['status']='blocked: no eligible screening results'; publish(out,state); return state
+                    if finalists and not validated:
                         state['status']='blocked: no validated finalists; inspect failures before continuing'
                         publish(out,state); return state
                     if len(state['generations'])==index+1:
